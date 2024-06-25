@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'expenses'%}">Gastos</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Editar Gastos
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-md-2">
+      <a
+        href="{% url 'expense-delete' expense.id %}"
+        class="btn btn-danger btn-sm"
+        >Borrar</a
+      >
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="{% url 'expense-edit' expense.id %}" method="post">
+        {% include 'partials/_messages.html'%} {% csrf_token %}
+        <div class="form-group">
+          <label for="">Cantidad</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="amount"
+            value="{{values.amount}}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Descripción</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="description"
+            value="{{values.description}}"
+          />
+          <div class="form-group">
+            <label for="">Nombre de orden de compra</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              name="ncompra"
+              value="{{values.ncompra}}"
+            />
+            <div class="form-group">
+              <label for="">Dirección de factura</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="dfactura"
+                value="{{values.dfactura}}"
+              />
+              <div class="form-group">
+                <label for="">Dirección de despacho</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="ddespacho"
+                  value="{{values.ddespacho}}"
+                />
+                <div class="form-group">
+                  <label for="">Contacto</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="contacto"
+                    value="{{values.contacto}}"
+                  />
+        </div>
+        <div class="form-group">
+          <label for="">Categoria</label>
+          <select class="form-control" name="category">
+            <option selected name="category" value="{{values.category}}"
+              >{{values.category}}</option
+            >
+            {% for category in categories%}
+            <option name="category" value="{{category.name}}"
+              >{{category.name}}</option
+            >
+
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Fecha de Gastos</label>
+          <input
+            type="date"
+            value="{{values.date |date:'Y-m-d' }}"
+            class="form-control form-control-sm"
+            name="expense_date"
+          />
+        </div>
+
+        <input
+          type="submit"
+          value="Save"
+          class="btn btn-primary btn-primary-sm"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
